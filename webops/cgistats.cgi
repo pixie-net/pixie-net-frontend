@@ -1,0 +1,1 @@
+../cgistats.cgi
