@@ -1,10 +1,11 @@
 TARGET = cgitraces.cgi gettraces progfippi runstats cgistats.cgi startdaq coincdaq findsettings acquire cgiwaveforms.cgi clockprog pollcsr avgadc cgiavgtraces.cgi
 LIBS = -lm 
-CFLAGS = -std=c99 -Wall
-CXXFLAGS = -Wall -O3 -DNDEBUG   -pthread -std=gnu++98
+CFLAGS = -Wall
+CXXFLAGS = -Wall -O3 -DNDEBUG   -pthread -std=c++11
 INCDIRS = -I/usr  -I/usr/include -I/usr/local/include
-LINKFLAGS =  -static -static-libstdc++
+#LINKFLAGS =  -static -static-libstdc++
 BOOSTLIBS = -L/usr/local/lib -lboost_date_time -lboost_chrono -lboost_atomic -lboost_program_options -lboost_system -lboost_thread -lrt -pthread
+KAFKALIBS = -L/usr/local/lib -lssl -lcrypto -lrdkafka -lcppkafka
 
 .PHONY: default all clean
 
@@ -16,7 +17,7 @@ all: default
 
 %.o: %.cpp 
 	g++  $(CXXFLAGS) $(INCDIRS) -c $< -o $@
-	
+
 cgitraces.cgi: cgitraces.o PixieNetDefs.h
 	gcc cgitraces.o $(LIBS) -o cgitraces.cgi
 
@@ -42,7 +43,7 @@ findsettings: findsettings.o PixieNetDefs.h
 	gcc findsettings.o PixieNetCommon.o $(LIBS) -o findsettings
 
 acquire: acquire.o PixieNetConfig.o PixieNetCommon.o PixieNetDefs.h
-	g++ acquire.o PixieNetCommon.o PixieNetConfig.o -rdynamic $(LINKFLAGS) $(LIBS) $(BOOSTLIBS) -o acquire
+	g++ acquire.o PixieNetCommon.o PixieNetConfig.o -rdynamic $(LINKFLAGS) $(LIBS) $(KAFKALIBS) $(BOOSTLIBS) -o acquire
 
 cgiwaveforms.cgi: cgiwaveforms.o PixieNetCommon.o PixieNetDefs.h
 	gcc cgiwaveforms.o PixieNetCommon.o $(LIBS) -o cgiwaveforms.cgi

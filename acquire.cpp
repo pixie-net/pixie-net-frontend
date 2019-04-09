@@ -53,6 +53,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
@@ -61,6 +62,9 @@
 #include <boost/lockfree/queue.hpp>
 #include <boost/program_options.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+
+#include "cppkafka/producer.h"
+#include "cppkafka/configuration.h"
 
 #include "PixieNetDefs.h"
 
@@ -810,7 +814,7 @@ void write_lm_data400( FILE *outfile,
 {
   PixieNetHit402 hit;
   boost::mutex local_mutex;
-  
+
   while( taking_data )
   {
     boost::unique_lock<boost::mutex> lock( local_mutex );
@@ -925,6 +929,20 @@ void histogram_lm_data(uint32_t histogram[NCHANNELS+1][MAX_MCA_BINS],
       num_wrote += 1;
     }
   }//
+
+  /// SVP says, let's output the MCA into a Kafka topic for funzies. 
+  cppkafka::MessageBuilder builder("pixie-net");
+  builder.partition(0);
+  cppkafka::Configuration config = {
+    {"metadata.broker.list", "192.168.1.25:9092"}
+  };
+
+  cppkafka::Producer producer(config);
+  string payload;
+  for(int i = 0; i < MAX_MCA_BINS-1; i++)
+    payload += std::to_string(histogram[0][i]) + ",";
+  producer.produce(builder.payload(payload));
+  producer.flush();
 }//write_lm_data(...)
 
 
@@ -1430,8 +1448,22 @@ int PixieNetHit_write_400( FILE *outstrm, const PixieNetHit402 * const hit )
   
 #if( PixieNetHit_HAS_WAVEFORM )
   fwrite( hit->waveform0, hit->num_waveform0, sizeof(hit->waveform0[0]), outstrm );
+  ///SVP says, "Stuff the waveform into the buffer if it exists!"
+  memcpy(buffer + sizeof(hit->waveform0[0]), &(hit->waveform0), sizeof(hit->waveform0[0]));
 #endif
-  
+
+  // SVP says, "Let's write this to Kafka instead of to disk!
+  static cppkafka::MessageBuilder builder("pixie-net");
+  static cppkafka::Configuration config = {
+    {"metadata.broker.list", "192.168.1.25:9092"}
+  };
+  static cppkafka::Producer producer(config);
+  builder.partition(1); //Use partition 1 since partition 0 is for MCA
+  std::string payload(reinterpret_cast<char*>(buffer), sizeof(buffer));
+  producer.produce(builder.payload("HELLO FROM INSIDE PixieNetHit_write_400"));
+  //producer.produce(builder.payload(payload));
+  producer.flush();
+   
   return 1;
 }//void PixieNetHit_write_400( FILE *outstrm, const PixieNetHit400 * const hit )
 
