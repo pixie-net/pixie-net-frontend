@@ -934,15 +934,16 @@ void histogram_lm_data(uint32_t histogram[NCHANNELS+1][MAX_MCA_BINS],
   cppkafka::MessageBuilder builder("pixie-net");
   builder.partition(0);
   cppkafka::Configuration config = {
-    {"metadata.broker.list", "192.168.1.25:9092"}
+      {"metadata.broker.list", "192.168.1.25:9092"}
   };
 
-  cppkafka::Producer producer(config);
+  //cppkafka::Producer producer(config);
   string payload;
   for(int i = 0; i < MAX_MCA_BINS-1; i++)
     payload += std::to_string(histogram[0][i]) + ",";
-  producer.produce(builder.payload(payload));
-  producer.flush();
+  cout << "MCA IS : " << payload << endl;
+  //producer.produce(builder.payload(payload));
+  //producer.flush();
 }//write_lm_data(...)
 
 
@@ -1460,6 +1461,7 @@ int PixieNetHit_write_400( FILE *outstrm, const PixieNetHit402 * const hit )
   static cppkafka::Producer producer(config);
   builder.partition(1); //Use partition 1 since partition 0 is for MCA
   std::string payload(reinterpret_cast<char*>(buffer), sizeof(buffer));
+  cout << "PixieNetHit_write_400 - getting ready to deliver the payload." << endl;
   producer.produce(builder.payload("HELLO FROM INSIDE PixieNetHit_write_400"));
   //producer.produce(builder.payload(payload));
   producer.flush();
