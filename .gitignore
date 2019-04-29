@@ -1,0 +1,54 @@
+# IDE files
+.idea/
+*~
+
+# Document files
+*.docx
+*.pdf
+
+# Data files
+*.csv
+*.b00
+*.dat
+*.dt2
+*.txt
+*.bit
+*_raw
+
+# Project specific programs
+progfippi
+acquire
+findsettings
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
