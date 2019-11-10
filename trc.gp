@@ -1,4 +1,4 @@
-reset 
+reset
 set datafile separator ","
 set key autotitle columnhead
 
