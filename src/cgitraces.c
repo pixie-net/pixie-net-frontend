@@ -100,7 +100,7 @@ int main(void) {
       adc3[k] = mapped[AADC3] & 0xFFFF;
 
    // read the webpage template and print 
-   fil = fopen("adcpage.html","r");
+   fil = fopen("../adcpage.html","r");
    for( k = 0; k < 40; k ++ )
    {
       fgets(line, LINESZ, fil);     // read from template, first part
