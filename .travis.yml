@@ -12,39 +12,6 @@ sudo: required
 
 matrix:
   include:
-#    - os: linux
-#      addons:
-#        apt:
-#          sources:
-#            - ubuntu-toolchain-r-test
-#          packages:
-#            - g++-4.9
-#            - libncurses5-dev
-#      env:
-#        - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
-#        - BUILD_OPTIONS=""
-#    - os: linux
-#      addons:
-#        apt:
-#          sources:
-#            - ubuntu-toolchain-r-test
-#          packages:
-#            - g++-5
-#            - libncurses5-dev
-#      env:
-#        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-#        - BUILD_OPTIONS=""
-#    - os: linux
-#      addons:
-#        apt:
-#          sources:
-#            - ubuntu-toolchain-r-test
-#          packages:
-#            - g++-6
-#            - libncurses5-dev
-#      env:
-#        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-#        - BUILD_OPTIONS=""
     - os: linux
       addons:
         apt:
