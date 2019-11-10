@@ -61,5 +61,5 @@ cgiavgtraces.cgi: cgiavgtraces.o  PixieNetConfig.o PixieNetDefs.h
 	g++ cgiavgtraces.o PixieNetConfig.o $(LIBS) -o cgiavgtraces.cgi
 
 clean:
-	-rm -f *.o
+	-rm -f *.o *~
 	-rm -f $(TARGET)
