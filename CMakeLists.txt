@@ -22,7 +22,7 @@ endif ()
 # If user does not specify prefix we assign it to the project root directory
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     message(STATUS "Install Prefix not specified.")
-    get_filename_component(INSTALL_DIR ${CMAKE_BINARY_DIR}/../ REALPATH)
+    get_filename_component(INSTALL_DIR ${PROJECT_SOURCE_DIR} REALPATH)
     set(CMAKE_INSTALL_PREFIX ${INSTALL_DIR} CACHE PATH "Install Prefix" FORCE)
 endif ()
 message(STATUS "Installing to ${CMAKE_INSTALL_PREFIX}")
