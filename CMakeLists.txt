@@ -53,56 +53,5 @@ if (BUILD_TESTS)
     enable_testing()
 endif (BUILD_TESTS)
 
-#We use this instead of target_include_directories since every target has the same includes.
 include_directories(include)
-
-add_library(PixieNetCommon_OBJ STATIC src/PixieNetCommon.c)
-add_library(PixieNetCommon SHARED src/PixieNetCommon.c)
-install(TARGETS PixieNetCommon DESTINATION lib)
-
-add_library(PixieNetConfig_OBJ STATIC src/PixieNetConfig.cpp)
-add_library(PixieNetConfig SHARED src/PixieNetConfig.cpp)
-install(TARGETS PixieNetConfig DESTINATION lib)
-
-add_executable(cgitraces.cgi src/cgitraces.c)
-install(TARGETS cgitraces.cgi DESTINATION cgi)
-
-FOREACH (prog cgistats cgiwaveforms)
-    add_executable(${prog}.cgi src/${prog}.c)
-    target_link_libraries(${prog}.cgi PixieNetCommon_OBJ)
-    install(TARGETS ${prog}.cgi DESTINATION cgi)
-ENDFOREACH (prog)
-
-add_executable(cgiavgtraces.cgi src/cgiavgtraces.c)
-target_link_libraries(cgiavgtraces.cgi PixieNetConfig_OBJ)
-install(TARGETS cgiavgtraces.cgi DESTINATION cgi)
-
-FOREACH (prog gettraces pollcsr)
-    add_executable(${prog} src/${prog}.c)
-    install(TARGETS ${prog} DESTINATION bin)
-ENDFOREACH (prog)
-
-FOREACH (prog runstats findsettings clockprog)
-    add_executable(${prog} src/${prog}.c)
-    target_link_libraries(${prog} PixieNetCommon_OBJ m)
-    install(TARGETS ${prog} DESTINATION bin)
-ENDFOREACH (prog)
-
-add_executable(avgadc src/avgadc.c)
-target_link_libraries(avgadc PixieNetConfig_OBJ)
-install(TARGETS avgadc DESTINATION bin)
-
-FOREACH (prog progfippi startdaq coincdaq)
-    add_executable(${prog} src/${prog}.c)
-    target_link_libraries(${prog} PixieNetCommon_OBJ PixieNetConfig_OBJ)
-    install(TARGETS ${prog} DESTINATION bin)
-ENDFOREACH (prog)
-
-add_executable(acquire src/acquire.cpp)
-set(BOOST_ACQ_LIBS boost_date_time boost_chrono boost_atomic boost_program_options boost_system boost_thread rt)
-if (USE_KAFKA)
-    set(KAFKA_LIBS ssl crypto rdkafka cppkafka)
-    add_definitions(-DUSE_KAFKA)
-endif (USE_KAFKA)
-target_link_libraries(acquire PixieNetCommon_OBJ PixieNetConfig_OBJ m ${BOOST_ACQ_LIBS} ${KAFKA_LIBS})
-install(TARGETS acquire DESTINATION bin)
+add_subdirectory(src)
