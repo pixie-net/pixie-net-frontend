@@ -7,14 +7,9 @@ cmake_minimum_required(VERSION 3.10)
 
 project(pixie-net)
 
-# Set the C++ standard to c++11.
-# @TODO : After we move to GCC v. 6.1+ we will no longer need this statement.
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED YES)
-
 if (CMAKE_COMPILER_IS_GNUCXX)
-    if (${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS "4.9.2")
-        message(FATAL_ERROR "GCC version 4.9+ required for regex support. We recommend GCC 7+.")
+    if (${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS "7.0.0")
+        message(FATAL_ERROR "GCC version 7.0.0+ required.")
     endif ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -fPIC -fdiagnostics-color=auto -pthread")
 endif ()
