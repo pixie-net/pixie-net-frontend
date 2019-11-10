@@ -19,15 +19,10 @@ if (CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -fPIC -fdiagnostics-color=auto -pthread")
 endif ()
 
-# If user does not specify prefix we assign it to the install directory
-#@TODO: I do not like the fact that it makes the install directory before I'm
-#       ready for it. There are cases where I do not want to actually install just
-#       build. This configuration adds additional junk to my directory that I may
-#       not actually want or need.
+# If user does not specify prefix we assign it to the project root directory
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     message(STATUS "Install Prefix not specified.")
-    file(MAKE_DIRECTORY install)
-    get_filename_component(INSTALL_DIR ${CMAKE_BINARY_DIR}/../install REALPATH)
+    get_filename_component(INSTALL_DIR ${CMAKE_BINARY_DIR}/../ REALPATH)
     set(CMAKE_INSTALL_PREFIX ${INSTALL_DIR} CACHE PATH "Install Prefix" FORCE)
 endif ()
 message(STATUS "Installing to ${CMAKE_INSTALL_PREFIX}")
