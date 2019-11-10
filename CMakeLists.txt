@@ -74,51 +74,36 @@ install(TARGETS PixieNetConfig DESTINATION lib)
 add_executable(cgitraces.cgi src/cgitraces.c)
 install(TARGETS cgitraces.cgi DESTINATION cgi)
 
-add_executable(gettraces src/gettraces.c)
-install(TARGETS gettraces DESTINATION bin)
-
-add_executable(pollcsr src/pollcsr.c)
-install(TARGETS pollcsr DESTINATION bin)
-
-add_executable(runstats src/runstats.c)
-target_link_libraries(runstats PixieNetCommon_OBJ)
-install(TARGETS runstats DESTINATION bin)
-
-add_executable(cgistats.cgi src/cgistats.c)
-target_link_libraries(cgistats.cgi PixieNetCommon_OBJ)
-install(TARGETS cgistats.cgi DESTINATION cgi)
-
-add_executable(findsettings src/findsettings.c)
-target_link_libraries(findsettings PixieNetCommon_OBJ m)
-install(TARGETS findsettings DESTINATION bin)
-
-add_executable(cgiwaveforms.cgi src/cgiwaveforms.c)
-target_link_libraries(cgiwaveforms.cgi PixieNetCommon_OBJ)
-install(TARGETS cgiwaveforms.cgi DESTINATION cgi)
-
-add_executable(clockprog src/clockprog.c)
-target_link_libraries(clockprog PixieNetCommon_OBJ)
-install(TARGETS clockprog DESTINATION bin)
-
-add_executable(avgadc src/avgadc.c)
-target_link_libraries(avgadc PixieNetConfig_OBJ)
-install(TARGETS avgadc DESTINATION bin)
+FOREACH(prog cgistats cgiwaveforms)
+    add_executable(${prog}.cgi src/${prog}.c)
+    target_link_libraries(${prog}.cgi PixieNetCommon_OBJ)
+    install(TARGETS ${prog}.cgi DESTINATION cgi)
+ENDFOREACH(prog)
 
 add_executable(cgiavgtraces.cgi src/cgiavgtraces.c)
 target_link_libraries(cgiavgtraces.cgi PixieNetConfig_OBJ)
 install(TARGETS cgiavgtraces.cgi DESTINATION cgi)
 
-add_executable(progfippi src/progfippi.c)
-target_link_libraries(progfippi PixieNetCommon_OBJ PixieNetConfig_OBJ)
-install(TARGETS progfippi DESTINATION bin)
+FOREACH(prog gettraces pollcsr)
+    add_executable(${prog} src/${prog}.c)
+    install(TARGETS ${prog} DESTINATION bin)
+ENDFOREACH(prog)
 
-add_executable(startdaq src/startdaq.c)
-target_link_libraries(startdaq PixieNetCommon_OBJ PixieNetConfig_OBJ)
-install(TARGETS startdaq DESTINATION bin)
+FOREACH(prog runstats findsettings clockprog)
+    add_executable(${prog} src/${prog}.c)
+    target_link_libraries(${prog} PixieNetCommon_OBJ m)
+    install(TARGETS ${prog} DESTINATION bin)
+ENDFOREACH(prog)
 
-add_executable(coincdaq src/coincdaq.c)
-target_link_libraries(coincdaq PixieNetCommon_OBJ PixieNetConfig_OBJ)
-install(TARGETS coincdaq DESTINATION bin)
+add_executable(avgadc src/avgadc.c)
+target_link_libraries(avgadc PixieNetConfig_OBJ)
+install(TARGETS avgadc DESTINATION bin)
+
+FOREACH(prog progfippi startdaq coincdaq)
+    add_executable(${prog} src/${prog}.c)
+    target_link_libraries(${prog} PixieNetCommon_OBJ PixieNetConfig_OBJ)
+    install(TARGETS ${prog} DESTINATION bin)
+ENDFOREACH(prog)
 
 add_executable(acquire src/acquire.cpp)
 target_link_libraries(acquire PixieNetCommon_OBJ PixieNetConfig_OBJ
