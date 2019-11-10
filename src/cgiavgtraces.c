@@ -58,7 +58,7 @@ int main(void) {
   char line[LINESZ];
 
   PixieNetFippiConfig fippiconfig;		// struct holding the input parameters
-  const char *defaults_file = "defaults.ini";
+  const char *defaults_file = "../defaults.ini";
   int rval = init_PixieNetFippiConfig_from_file( defaults_file, 0, &fippiconfig );   // first load defaults, do not allow missing parameters
   if( rval != 0 )
   {
