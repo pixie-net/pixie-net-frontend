@@ -32,26 +32,19 @@
  * THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE.
  *----------------------------------------------------------------------*/
+#include <fcntl.h>
 #include <math.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <time.h>
-#include <signal.h>
-#include <errno.h>
 #include <string.h>
 #include <sys/mman.h>
+#include <unistd.h>
 
 #include "PixieNetDefs.h"
 #include "PixieNetCommon.h"
 #include "PixieNetConfig.h"
 
 
-int main(void) {		 
-
+int main(void) {
   int fd;
   void *map_addr;
   int size = 4096;
@@ -64,7 +57,7 @@ int main(void) {
   double scale[NCHANNELS];
   char line[LINESZ];
 
-    PixieNetFippiConfig fippiconfig;		// struct holding the input parameters
+  PixieNetFippiConfig fippiconfig;		// struct holding the input parameters
   const char *defaults_file = "defaults.ini";
   int rval = init_PixieNetFippiConfig_from_file( defaults_file, 0, &fippiconfig );   // first load defaults, do not allow missing parameters
   if( rval != 0 )
@@ -99,9 +92,6 @@ int main(void) {
   maxwait = (int)floor(maxwait * 8 / 100000);             // scale in 100 us wait cycles
 //  printf( "maxwait for timeout: %d \n", maxwait );
 //  printf( "scale factors %f %f %f %f \n", scale[0], scale[1], scale[2], scale[3] );
-
-  
-
 
   // *************** PS/PL IO initialization *********************
   // open the device for PD register I/O
@@ -183,7 +173,7 @@ int main(void) {
 
 
       // 4. read the webpage template and print 
-   fil = fopen("adcavgpage.html","r");
+   fil = fopen("../adcavgpage.html","r");
    for( k = 0; k < 40; k ++ )
    {
       fgets(line, LINESZ, fil);     // read from template, first part
