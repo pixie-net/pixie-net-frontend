@@ -16,7 +16,7 @@ if (CMAKE_COMPILER_IS_GNUCXX)
     if (${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS "4.9.2")
         message(FATAL_ERROR "GCC version 4.9+ required for regex support. We recommend GCC 7+.")
     endif ()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -fPIC -fdiagnostics-color=auto")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -fPIC -fdiagnostics-color=auto -pthread")
 endif ()
 
 # If user does not specify prefix we assign it to the install directory
@@ -48,6 +48,9 @@ option(BUILD_TESTS "Builds programs designed to test the package. Including Unit
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 find_package(Threads REQUIRED)
+find_package(Boost 1.65.1 REQUIRED COMPONENTS
+        date_time chrono atomic program_options system thread)
+find_package(LibRDKafka 0.11.0 REQUIRED)
 
 # https://github.com/unittest-cpp/unittest-cpp.git
 if (BUILD_TESTS)
@@ -57,7 +60,68 @@ if (BUILD_TESTS)
     enable_testing()
 endif (BUILD_TESTS)
 
-#------------------------------------------------------------------------------
 #We use this instead of target_include_directories since every target has the same includes.
 include_directories(include)
 
+add_library(PixieNetCommon_OBJ STATIC src/PixieNetCommon.c)
+add_library(PixieNetCommon SHARED src/PixieNetCommon.c)
+install(TARGETS PixieNetCommon DESTINATION lib)
+
+add_library(PixieNetConfig_OBJ STATIC src/PixieNetConfig.cpp)
+add_library(PixieNetConfig SHARED src/PixieNetConfig.cpp)
+install(TARGETS PixieNetConfig DESTINATION lib)
+
+add_executable(cgitraces.cgi src/cgitraces.c)
+install(TARGETS cgitraces.cgi DESTINATION cgi)
+
+add_executable(gettraces src/gettraces.c)
+install(TARGETS gettraces DESTINATION bin)
+
+add_executable(pollcsr src/pollcsr.c)
+install(TARGETS pollcsr DESTINATION bin)
+
+add_executable(runstats src/runstats.c)
+target_link_libraries(runstats PixieNetCommon_OBJ)
+install(TARGETS runstats DESTINATION bin)
+
+add_executable(cgistats.cgi src/cgistats.c)
+target_link_libraries(cgistats.cgi PixieNetCommon_OBJ)
+install(TARGETS cgistats.cgi DESTINATION cgi)
+
+add_executable(findsettings src/findsettings.c)
+target_link_libraries(findsettings PixieNetCommon_OBJ m)
+install(TARGETS findsettings DESTINATION bin)
+
+add_executable(cgiwaveforms.cgi src/cgiwaveforms.c)
+target_link_libraries(cgiwaveforms.cgi PixieNetCommon_OBJ)
+install(TARGETS cgiwaveforms.cgi DESTINATION cgi)
+
+add_executable(clockprog src/clockprog.c)
+target_link_libraries(clockprog PixieNetCommon_OBJ)
+install(TARGETS clockprog DESTINATION bin)
+
+add_executable(avgadc src/avgadc.c)
+target_link_libraries(avgadc PixieNetConfig_OBJ)
+install(TARGETS avgadc DESTINATION bin)
+
+add_executable(cgiavgtraces.cgi src/cgiavgtraces.c)
+target_link_libraries(cgiavgtraces.cgi PixieNetConfig_OBJ)
+install(TARGETS cgiavgtraces.cgi DESTINATION cgi)
+
+add_executable(progfippi src/progfippi.c)
+target_link_libraries(progfippi PixieNetCommon_OBJ PixieNetConfig_OBJ)
+install(TARGETS progfippi DESTINATION bin)
+
+add_executable(startdaq src/startdaq.c)
+target_link_libraries(startdaq PixieNetCommon_OBJ PixieNetConfig_OBJ)
+install(TARGETS startdaq DESTINATION bin)
+
+add_executable(coincdaq src/coincdaq.c)
+target_link_libraries(coincdaq PixieNetCommon_OBJ PixieNetConfig_OBJ)
+install(TARGETS coincdaq DESTINATION bin)
+
+add_executable(acquire src/acquire.cpp)
+target_link_libraries(acquire PixieNetCommon_OBJ PixieNetConfig_OBJ
+        boost_date_time boost_chrono boost_atomic boost_program_options
+        boost_system boost_thread rt ssl crypto rdkafka cppkafka)
+install(TARGETS acquire DESTINATION bin)
