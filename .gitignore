@@ -3,6 +3,7 @@
 *~
 *.cgi
 temp0_raw
+webops/
 
 ## Executables
 acquire
