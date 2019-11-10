@@ -1,0 +1,77 @@
+dist: bionic
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+env:
+  global:
+    - MAKEFLAGS="-j 8"
+language: cpp
+sudo: required
+
+matrix:
+  include:
+#    - os: linux
+#      addons:
+#        apt:
+#          sources:
+#            - ubuntu-toolchain-r-test
+#          packages:
+#            - g++-4.9
+#            - libncurses5-dev
+#      env:
+#        - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+#        - BUILD_OPTIONS=""
+#    - os: linux
+#      addons:
+#        apt:
+#          sources:
+#            - ubuntu-toolchain-r-test
+#          packages:
+#            - g++-5
+#            - libncurses5-dev
+#      env:
+#        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+#        - BUILD_OPTIONS=""
+#    - os: linux
+#      addons:
+#        apt:
+#          sources:
+#            - ubuntu-toolchain-r-test
+#          packages:
+#            - g++-6
+#            - libncurses5-dev
+#      env:
+#        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+#        - BUILD_OPTIONS=""
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+            - libncurses5-dev
+            - libboost-date-time-dev
+            - libboost-chrono-dev
+            - libboost-atomic-dev
+            - libboost-program-options-dev
+            - libboost-system-dev
+            - libboost-thread-dev
+            - librdkafka-dev
+            - librdkafka++1
+            - librdkafka1
+      env:
+        - BUILD_OPTIONS=""
+
+before_install:
+  - sudo apt-get -qq update --install-suggests
+  - eval "${MATRIX_EVAL}"
+  - export ORIG_DIR=$PWD
+  - git clone https://github.com/unittest-cpp/unittest-cpp.git && cd unittest-cpp/builds/
+  - cmake ../ && sudo make install && cd $ORIG_DIR
+
+script:
+  - mkdir build && cd build
+  - cmake ../ ${BUILD_OPTIONS} && make -j8 && ctest -j8
