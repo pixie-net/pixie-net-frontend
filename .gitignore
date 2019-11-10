@@ -4,6 +4,7 @@
 *.cgi
 temp0_raw
 webops/
+data/sample/
 
 ## Executables
 acquire
@@ -22,7 +23,6 @@ startdaq
 *.b00
 *.dat
 *.dt2
-*.txt
 *.bit
 *_raw
 
