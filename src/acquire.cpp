@@ -63,8 +63,10 @@
 #include <boost/program_options.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
+#ifdef USE_KAFKA
 #include "cppkafka/producer.h"
 #include "cppkafka/configuration.h"
+#endif
 
 #include "PixieNetDefs.h"
 
@@ -930,20 +932,21 @@ void histogram_lm_data(uint32_t histogram[NCHANNELS+1][MAX_MCA_BINS],
     }
   }//
 
-  /// SVP says, let's output the MCA into a Kafka topic for funzies. 
+#ifdef USE_KAFKA
+  // SVP says, let's output the MCA into a Kafka topic for funzies.
   cppkafka::MessageBuilder builder("pixie-net");
   builder.partition(0);
   cppkafka::Configuration config = {
       {"metadata.broker.list", "192.168.1.25:9092"}
   };
-
-  //cppkafka::Producer producer(config);
+  cppkafka::Producer producer(config);
   string payload;
   for(int i = 0; i < MAX_MCA_BINS-1; i++)
     payload += std::to_string(histogram[0][i]) + ",";
   cout << "MCA IS : " << payload << endl;
-  //producer.produce(builder.payload(payload));
-  //producer.flush();
+  producer.produce(builder.payload(payload));
+  producer.flush();
+#endif
 }//write_lm_data(...)
 
 
@@ -1453,6 +1456,7 @@ int PixieNetHit_write_400( FILE *outstrm, const PixieNetHit402 * const hit )
   memcpy(buffer + sizeof(hit->waveform0[0]), &(hit->waveform0), sizeof(hit->waveform0[0]));
 #endif
 
+#ifdef USE_KAFKA
   // SVP says, "Let's write this to Kafka instead of to disk!
   static cppkafka::MessageBuilder builder("pixie-net");
   static cppkafka::Configuration config = {
@@ -1465,7 +1469,7 @@ int PixieNetHit_write_400( FILE *outstrm, const PixieNetHit402 * const hit )
   producer.produce(builder.payload("HELLO FROM INSIDE PixieNetHit_write_400"));
   //producer.produce(builder.payload(payload));
   producer.flush();
-   
+#endif
   return 1;
 }//void PixieNetHit_write_400( FILE *outstrm, const PixieNetHit400 * const hit )
 

@@ -45,12 +45,16 @@ endif (CMAKE_BUILD_TYPE MATCHES "Debug")
 
 include(CMakeDependentOption)
 option(BUILD_TESTS "Builds programs designed to test the package. Including UnitTest++ test." OFF)
+option(USE_KAFKA "Builds acquire with Kafka support" OFF)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 find_package(Threads REQUIRED)
 find_package(Boost 1.65.1 REQUIRED COMPONENTS
         date_time chrono atomic program_options system thread)
-find_package(LibRDKafka 0.11.0 REQUIRED)
+
+if (USE_KAFKA)
+    find_package(LibRDKafka 0.11.0 REQUIRED)
+endif (USE_KAFKA)
 
 # https://github.com/unittest-cpp/unittest-cpp.git
 if (BUILD_TESTS)
@@ -74,39 +78,42 @@ install(TARGETS PixieNetConfig DESTINATION lib)
 add_executable(cgitraces.cgi src/cgitraces.c)
 install(TARGETS cgitraces.cgi DESTINATION cgi)
 
-FOREACH(prog cgistats cgiwaveforms)
+FOREACH (prog cgistats cgiwaveforms)
     add_executable(${prog}.cgi src/${prog}.c)
     target_link_libraries(${prog}.cgi PixieNetCommon_OBJ)
     install(TARGETS ${prog}.cgi DESTINATION cgi)
-ENDFOREACH(prog)
+ENDFOREACH (prog)
 
 add_executable(cgiavgtraces.cgi src/cgiavgtraces.c)
 target_link_libraries(cgiavgtraces.cgi PixieNetConfig_OBJ)
 install(TARGETS cgiavgtraces.cgi DESTINATION cgi)
 
-FOREACH(prog gettraces pollcsr)
+FOREACH (prog gettraces pollcsr)
     add_executable(${prog} src/${prog}.c)
     install(TARGETS ${prog} DESTINATION bin)
-ENDFOREACH(prog)
+ENDFOREACH (prog)
 
-FOREACH(prog runstats findsettings clockprog)
+FOREACH (prog runstats findsettings clockprog)
     add_executable(${prog} src/${prog}.c)
     target_link_libraries(${prog} PixieNetCommon_OBJ m)
     install(TARGETS ${prog} DESTINATION bin)
-ENDFOREACH(prog)
+ENDFOREACH (prog)
 
 add_executable(avgadc src/avgadc.c)
 target_link_libraries(avgadc PixieNetConfig_OBJ)
 install(TARGETS avgadc DESTINATION bin)
 
-FOREACH(prog progfippi startdaq coincdaq)
+FOREACH (prog progfippi startdaq coincdaq)
     add_executable(${prog} src/${prog}.c)
     target_link_libraries(${prog} PixieNetCommon_OBJ PixieNetConfig_OBJ)
     install(TARGETS ${prog} DESTINATION bin)
-ENDFOREACH(prog)
+ENDFOREACH (prog)
 
 add_executable(acquire src/acquire.cpp)
-target_link_libraries(acquire PixieNetCommon_OBJ PixieNetConfig_OBJ
-        boost_date_time boost_chrono boost_atomic boost_program_options
-        boost_system boost_thread rt ssl crypto rdkafka cppkafka)
+set(BOOST_ACQ_LIBS boost_date_time boost_chrono boost_atomic boost_program_options boost_system boost_thread rt)
+if (USE_KAFKA)
+    set(KAFKA_LIBS ssl crypto rdkafka cppkafka)
+    add_definitions(-DUSE_KAFKA)
+endif (USE_KAFKA)
+target_link_libraries(acquire PixieNetCommon_OBJ PixieNetConfig_OBJ m ${BOOST_ACQ_LIBS} ${KAFKA_LIBS})
 install(TARGETS acquire DESTINATION bin)
