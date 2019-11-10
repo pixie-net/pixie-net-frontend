@@ -39,8 +39,7 @@ option(USE_KAFKA "Builds acquire with Kafka support" OFF)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 find_package(Threads REQUIRED)
-find_package(Boost 1.65.1 REQUIRED COMPONENTS
-        date_time chrono atomic program_options system thread)
+find_package(Boost 1.65.1 REQUIRED COMPONENTS date_time chrono atomic program_options system thread)
 
 if (USE_KAFKA)
     find_package(LibRDKafka 0.11.0 REQUIRED)
