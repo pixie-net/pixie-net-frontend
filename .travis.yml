@@ -63,7 +63,6 @@ matrix:
             - librdkafka++1
             - librdkafka1
       env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
         - BUILD_OPTIONS=""
 
 before_install:
