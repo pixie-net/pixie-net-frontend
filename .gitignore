@@ -26,6 +26,7 @@ startdaq
 *.dt2
 *.bit
 *_raw
+LM*
 
 # Prerequisites
 *.d
