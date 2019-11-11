@@ -78,7 +78,7 @@ int main(void) {
   // ************** XIA code begins **************************
 
   // read the webpage template and print 
-  fil = fopen("../rspage.html","r");
+  fil = fopen("../html/rspage.html","r");
   for( k = 0; k < 61; k ++ )
   {
       fgets(line, LINESZ, fil);     // read from template, first part

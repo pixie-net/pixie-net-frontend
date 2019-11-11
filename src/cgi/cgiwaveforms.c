@@ -147,7 +147,7 @@ int main(void) {
 
    // -------- read the webpage template and print  ---------
 
-   fil1 = fopen("../adcpage.html","r");
+   fil1 = fopen("../html/adcpage.html","r");
    for( k = 0; k < 30; k ++ )
    {
      
