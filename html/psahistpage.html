@@ -40,7 +40,7 @@
 // define global constants
 var Nbins=100;
    
-Plotly.d3.csv('psa2D.csv', function(err, rows){
+Plotly.d3.csv('../psa2D.csv', function(err, rows){
 
 	function unpack(rows, key) {
 	  return rows.map(function(row) { return row[key]; });
