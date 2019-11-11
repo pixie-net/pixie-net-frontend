@@ -3,10 +3,10 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Pixie-Net PSA Surface</title>
+<title>Pixie-Net PSA Histogram</title>
 
 <!-- Plotly.js -->
-  <script src="js/plotly-latest.min.js"></script>
+  <script src="../js/plotly-latest.min.js"></script>
 
 <style type="text/css">
 	body { background-color:#d0d0d0; font-family:sans-serif; }
@@ -25,9 +25,9 @@
 
 <body>
  <div class="box">            
-<img src="Xia_LLC_web_header.jpg" width="500" height="80" border="0"></a>
+<img src="../assets/Xia_LLC_web_header.jpg" width="500" height="80" border="0"></a>
 <p> </p>
-<p> <h1> Pixie-Net PSA Surface </h1></p>
+<p> <h1> Pixie-Net PSA histograms </h1></p>
 
 
 <!-- Plotly chart will be drawn inside this DIV -->
@@ -41,9 +41,10 @@
 var Nbins=100;
    
 Plotly.d3.csv('psa2D.csv', function(err, rows){
-function unpack(rows, key) {
-  return rows.map(function(row) { return row[key]; });
-}
+
+	function unpack(rows, key) {
+	  return rows.map(function(row) { return row[key]; });
+	}
 
 	// define the color scheme
 		var psacolor = [
@@ -71,7 +72,7 @@ function unpack(rows, key) {
 						 ['0.980', 'rgb(255,  0,255)'],
 						 ['1.000', 'rgb(  0,  0,  0)'],
 					  ]; 
-  
+	  
 	var z_data0=[ ]
 	for(i=0;i< Nbins;i++)
 	{
@@ -92,45 +93,35 @@ function unpack(rows, key) {
 	{
 	  z_data3.push(unpack(rows,i));
 	}
+	var data0 = [{
+	           z: z_data0,
+				  colorscale: psacolor,
+	           type: 'heatmap'
+	        }];	  
+	var data1 = [{
+	           z: z_data1,
+				  colorscale: psacolor,
+	           type: 'heatmap'
+	        }];	  		  	
+	var data2 = [{
+	           z: z_data2,
+				  colorscale: psacolor,
+	           type: 'heatmap'
+	        }];	  
+	var data3 = [{
+	           z: z_data3,
+				  colorscale: psacolor,
+	           type: 'heatmap'
+	        }];	  		  
 
-var data0 = [{
-           z: z_data0,
-	  		  colorscale: psacolor,
-           type: 'surface'
-        }];  
-		  
 
-var data1 = [{
-           z: z_data1,
-	  		  colorscale: psacolor,
-           type: 'surface'
-        }];  
+   var layout = {  
+   		autosize: true,	 
+			margin: {t: 20},
+			xaxis: { title: 'Energy' },
+			yaxis: { title: 'PSA value' }
+  			}
 
-var data2 = [{
-           z: z_data2,
-	  		  colorscale: psacolor,
-           type: 'surface'
-        }];
-
-var data3 = [{
-           z: z_data3,
-	  		  colorscale: psacolor,
-           type: 'surface'
-        }];
-
-	var layout = {
-	  autosize: true,
-	  width: 500,
-	  height: 450,
-	  // camera: { eye: {x:0, y:0, z:0 }, up: {x:0, y:1, z:0} },
-	  margin: {
-	    l: 65,
-	    r: 50,
-	    b: 35,
-	    t: 30,
-	  }
-	};
-	
 	Plotly.newPlot('Ch0', data0, layout);
 	Plotly.newPlot('Ch1', data1, layout);
 	Plotly.newPlot('Ch2', data2, layout);
@@ -139,13 +130,16 @@ var data3 = [{
 });
 
 </script>
+
+
+
+
 </div>
 
-<p>Use browser button to refresh </p>
+<p>Use browser button to refresh </p>	   
 <p>Hover over plot to see plot options </p>
+
 
 </body>
 </html>
-
-
 

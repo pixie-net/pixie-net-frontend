@@ -173,7 +173,7 @@ int main(void) {
 
 
       // 4. read the webpage template and print 
-   fil = fopen("../adcavgpage.html","r");
+   fil = fopen("../html/adcavgpage.html","r");
    for( k = 0; k < 40; k ++ )
    {
       fgets(line, LINESZ, fil);     // read from template, first part
