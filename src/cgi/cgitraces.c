@@ -113,7 +113,7 @@ int main(void) {
     printf("      \"%d,%d,%d,%d,%d\\n \"  ,  \n", k, adc0[k - 1], adc1[k - 1], adc2[k - 1], adc3[k - 1]);
     
     // finish printing the webpage
-    for (k = 87; k < 147; k++) {
+    for (k = 87; k < 143; k++) {
         fgets(line, LINESZ, fil);        // read from template
         printf("%s", line);               // "print" to webserver on stdout
     }
