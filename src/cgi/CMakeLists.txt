@@ -1,4 +1,4 @@
-set(INSTALL_PATH web/cgi)
+set(INSTALL_PATH assets/cgi)
 
 add_executable(cgitraces.cgi cgitraces.c)
 install(TARGETS cgitraces.cgi DESTINATION ${INSTALL_PATH})
