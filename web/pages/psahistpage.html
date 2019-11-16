@@ -25,7 +25,7 @@
 
 <body>
  <div class="box">            
-<img src="../assets/Xia_LLC_web_header.jpg" width="500" height="80" border="0"></a>
+<img src="../images/Xia_LLC_web_header.jpg" width="500" height="80" border="0"></a>
 <p> </p>
 <p> <h1> Pixie-Net PSA histograms </h1></p>
 
@@ -40,7 +40,7 @@
 // define global constants
 var Nbins=100;
    
-Plotly.d3.csv('../psa2D.csv', function(err, rows){
+Plotly.d3.csv('../../psa2D.csv', function(err, rows){
 
 	function unpack(rows, key) {
 	  return rows.map(function(row) { return row[key]; });

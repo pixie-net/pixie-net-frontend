@@ -80,7 +80,7 @@ int main(void) {
 
    // -------- runtype 0x500, LMdata.txt ---------
    // read info from LM file
-    fil2 = fopen("../LMdata.txt","r");
+    fil2 = fopen("../../LMdata.txt","r");
     fgets(line, LINESZ, fil2);     // read from file, header info
     fgets(line, LINESZ, fil2);     // read and check run type
       sscanf(line, "%s %s %x", name, name2, &mval);
@@ -109,7 +109,7 @@ int main(void) {
 
 
    // read numbered waveform from LM file 
-   fil2 = fopen("../LMdata.txt","r");
+   fil2 = fopen("../../LMdata.txt","r");
    for( k = 0; k < 4; k ++ )
         fgets(line, LINESZ, fil2); // skip file header 
 
@@ -147,7 +147,7 @@ int main(void) {
 
    // -------- read the webpage template and print  ---------
 
-   fil1 = fopen("../html/adcpage.html","r");
+   fil1 = fopen("../pages/adcpage.html","r");
    for( k = 0; k < 30; k ++ )
    {
      
