@@ -2580,6 +2580,7 @@ Created using IcoMoon - icomoon.io
 
 .sidebar,
 .off-canvas-sidebar {
+  font-size: larger;
   position: fixed;
   top: 0;
   height: 100%;
@@ -3137,6 +3138,7 @@ Created using IcoMoon - icomoon.io
     left: unset !important;
     right: unset !important; }
   .card .card-body {
+    font-size: larger;
     padding: 15px 15px 10px 15px; }
     .card .card-body.table-full-width {
       padding-left: 0;
