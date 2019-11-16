@@ -1,75 +1,128 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Pixie-Net home page</title>
-<style type="text/css">
-	body { background-color:#d0d0d0; font-family:sans-serif; }
-	div.box { background-color:#ffffff; width:500px; margin:20px auto 50px; padding:50px; border-radius:10px; border:1px solid #808080; box-shadow:8px 15px 20px #404040 }
-	img.logo { float:right; margin:-10px 0 0 30px }
-	h1 { margin:0; font-size:24px }
-	h2 { margin-top:40px; font-size:20px; font-weight:normal; border-bottom:1px solid #ff9040 }
-	p { font-size:14px }
-	li { font-size:14px }
-	a { color:#6060d0; text-decoration:none }
-	a:hover { text-decoration:underline }
-</style>
+    <title>Pixie-Net - Home</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+
+    <!-- Material Kit CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="assets/css/now-ui-dashboard.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.ico"/>
 </head>
 
-
 <body>
-<div class="box">
-	<img src="web/images/Xia_LLC_web_header.jpg" width="500" height="80" border="0"></a>
-<p> </p>
-<p> <h1> Pixie-Net Home Page</h1></p>
-Shortcuts: <a href="web/cgi/cgitraces.cgi"> ADC traces </a>,
-           <a href="web/cgi/cgistats.cgi"> Run statistics </a>,
- 			  <a href="web/pages/webops.html"> Web operations </a> ,
-			  <a href="web/pages/mcapage.html">MCA spectra</a>
-	 	   
-	<h2>DAQ Monitoring</h2>
-	<p> <b>During</b> or after the data acquisition, view most recent
-	<ul>
-		<li> <a href="web/pages/mcapage.html">MCA spectra</a>
-	   <li> <a href="web/pages/rspage.html">Run status</a> (short)
-		<li> PSA <a href="web/pages/psahistpage.html">histogram</a>, <a href="web/pages/psahistprojpage.html">with projections</a> or <a href="web/pages/psasurfacepage.html">surface</a> plot</p>
-	</ul>
-	<h2>DAQ Results</h2>
-	<p> <b>After</b> the data acquisition, open/download </p>
-   <ul>
-   	<li> <a href="LMdata.txt"> 0x500</a> List mode data with waveforms (from run type 0x500, text) </li>
-		<li> <a href="LMdata.dat"> 0x501</a> List mode data without waveforms (from run type 0x501, csv) </li>
-		<li> <a href="LMdata.dt2"> 0x502</a> List mode with PSA (from run type 0x502, csv)</li>
-		<li> <a href="LMdata.dt3"> 0x503</a> List mode coincidence data (from run type 0x503, csv)</li>
-		<li> <a href="LMdata.b00"> 0x400/402</a> Binary list mode data (from run types 0x400, 0x402)</li>
-	   <li> <a href="MCA.csv"> MCA spectra </a> as csv file</li>
-	   <li> <a href="RS.csv"> Run statistics </a> as csv file (full)</li>
-		<li> <a href="psa2D.csv"> PSA histogram </a> as csv file</li>
-	</ul>
-	
-	<p> To view <b>very short</b> list mode data files (run type 0x501) as a table,  <a href="web/pages/lmtablepage.html"> click here</a>.
-	    (Large files take very long to format as table.)  </p>
-   <p>To view most recent ADC traces in a plot,  <a href="web/pages/adcpage.html"> click here</a>.</p>
-	<p>To view most recent averaged ADC traces in a plot,  <a href="web/pages/adcavgpage.html"> click here</a>.</p>
+<div class="wrapper">
+    <div class="sidebar" data-color="blue">
+        <!--
+            Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+        -->
+        <div class="logo">
+            <a href="https://xia.com" class="simple-text logo-mini">
+                <img class="image" src="assets/images/cropped-xia-xray-gamma-ray-products-logo.jpg">
+            </a>
+            <a href="index1.html" class="simple-text logo-normal">
+                Pixie-Net
+            </a>
+        </div>
+        <div class="sidebar-wrapper" id="sidebar-wrapper">
+            <ul class="nav">
+                <li>
+                    <a href="assets/cgi/cgitraces.cgi">
+                        <i class="now-ui-icons education_atom"></i>
+                        <p>ADC traces</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="assets/html/mcapage.html">
+                        <i class="now-ui-icons design_app"></i>
+                        <p>MCA spectra</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="assets/html/rspage.html">
+                        <i class="now-ui-icons ui-1_bell-53"></i>
+                        <p>Run Statistics</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="assets/html/psahistpage.html">
+                        <i class="now-ui-icons users_single-02"></i>
+                        <p>Pulse-Shape Analysis</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="assets/html/webops.html">
+                        <i class="now-ui-icons location_map-big"></i>
+                        <p>DAQ</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-   <p>To view LM waveforms from latest 0x500 DAQ,  <a href="web/cgi/cgiwaveforms.cgi?evno=0"> click here</a>.</p>
+    <div class="main-panel">
+        <div class="panel-header page-header-image">
+            <img src="assets/images/Xia_LLC_web_header.jpg"></a>
+        </div>
+        <h1> Pixie-Net Dashboard</h1></p>
+        <ul>
+            <li><a href="assets/html/mcapage.html">MCA spectra</a>
+            <li><a href="assets/html/rspage.html">Run status</a> (short)
+            <li> PSA <a href="assets/html/psahistpage.html">histogram</a>, <a href="assets/html/psahistprojpage.html">with
+                projections</a> or <a href="assets/html/psasurfacepage.html">surface</a> plot
+        </ul>
+        <h2>DAQ Results</h2>
+        <p><b>After</b> the data acquisition, open/download </p>
+        <ul>
+            <li><a href="LMdata.txt"> 0x500</a> List mode data with waveforms (from run type 0x500, text)</li>
+            <li><a href="LMdata.dat"> 0x501</a> List mode data without waveforms (from run type 0x501, csv)</li>
+            <li><a href="LMdata.dt2"> 0x502</a> List mode with PSA (from run type 0x502, csv)</li>
+            <li><a href="LMdata.dt3"> 0x503</a> List mode coincidence data (from run type 0x503, csv)</li>
+            <li><a href="LMdata.b00"> 0x400/402</a> Binary list mode data (from run types 0x400, 0x402)</li>
+            <li><a href="MCA.csv"> MCA spectra </a> as csv file</li>
+            <li><a href="RS.csv"> Run statistics </a> as csv file (full)</li>
+            <li><a href="psa2D.csv"> PSA histogram </a> as csv file</li>
+        </ul>
 
-	
-	<h2> CGI Current Data </h2>
-	<p><b>When no other task is in progress</b>, view/refresh
-    <ul>
-	    <li> <a href="web/cgi/cgitraces.cgi"> ADC traces </a> 	   </li>
-		  <li> <a href="web/cgi/cgiavgtraces.cgi"> Averaged ADC traces </a> 	   </li>
-       <li> <a href="web/cgi/cgistats.cgi"> Run statistics </a> (full) </li>
-	 </ul></p>
+        <p> To view <b>very short</b> list mode data files (run type 0x501) as a table, <a
+                href="assets/html/lmtablepage.html"> click here</a>.
+            (Large files take very long to format as table.) </p>
+        <p>To view most recent averaged ADC traces in a plot, <a href="assets/html/adcavgpage.html"> click here</a>.</p>
+        <p>To view LM waveforms from latest 0x500 DAQ, <a href="assets/cgi/cgiwaveforms.cgi?evno=0"> click here</a>.</p>
 
-	 <p> For other web operations (login required), <a href="web/pages/webops.html"> click here </a>
 
-	<h2> Help </h2>
-	<p> View Pixie-Net <a href="doc/Pixie_Net_Manual.pdf"> manual </a>  </p>
-	<p> XIA support website for <a href="http://support.xia.com/default.asp?W772"> Pixie-Net </a> </p>
+        <h2> CGI Current Data </h2>
+        <p><b>When no other task is in progress</b>, view/refresh
+        <ul>
+            <li><a href="assets/cgi/cgitraces.cgi"> ADC traces </a></li>
+            <li><a href="assets/cgi/cgiavgtraces.cgi"> Averaged ADC traces </a></li>
+            <li><a href="assets/cgi/cgistats.cgi"> Run statistics </a> (full)</li>
+        </ul>
+        </p>
+
+        <p> For other web operations (login required), <a href="assets/html/webops.html"> click here </a>
+
+        <h2> Help </h2>
+        <p> View Pixie-Net <a href="doc/Pixie_Net_Manual.pdf"> manual </a></p>
+        <p> XIA support website for <a href="http://support.xia.com/default.asp?W772"> Pixie-Net </a></p>
+    </div>
 </div>
-</body>
 
+</body>
+<!--   Core JS Files   -->
+<script src="assets/js/core/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="assets/js/core/perfect-scrollbar.min.js" type="text/javascript"></script>
+
+<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="assets/js/now-ui-dashboard.js" type="text/javascript"></script>
 </html>
