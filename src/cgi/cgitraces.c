@@ -98,7 +98,7 @@ int main(void) {
     // read the webpage template and print
     fil = fopen("../html/adcpage.html", "r");
     for (k = 0; k < 40; k++) {
-        char* result = fgets(line, LINESZ, fil);     // read from template, first part
+        char *result = fgets(line, LINESZ, fil);     // read from template, first part
         printf("%s", line);            // "print" to webserver on stdout
     }
     

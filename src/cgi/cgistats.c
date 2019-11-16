@@ -49,68 +49,66 @@
 
 
 int main(void) {
-
-  int fd;
-  void *map_addr;
-  int size = 4096;
-  volatile unsigned int *mapped;
-  int k;
-  FILE * fil;
-  char line[LINESZ];
- 
-  // *************** PS/PL IO initialization *********************
-  // open the device for PD register I/O
-  fd = open("/dev/uio0", O_RDWR);
-  if (fd < 0) {
-    perror("Failed to open devfile");
-    return 1;
-  }
-
-  map_addr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-
-  if (map_addr == MAP_FAILED) {
-    perror("Failed to mmap");
-    return 1;
-  }
-
-  mapped = (unsigned int *) map_addr;
-
-  // ************** XIA code begins **************************
-
-  // read the webpage template and print 
-  fil = fopen("../html/rspage.html","r");
-  for( k = 0; k < 61; k ++ )
-  {
-      fgets(line, LINESZ, fil);     // read from template, first part
-      if(k==5)
-         printf("<title>Pixie-Net Run Statistics (current)</title>\n");
-      else if(k==50)      
-         printf("<p> <h1> Pixie-Net Run Statistics (current) </h1>\n");
-      else if(k==51)  
-         printf(" (Do not execute during data acquisition) </p>\n");
-      else
-         printf("%s",line);            // "print" to webserver on stdout  
-  }   
-   
-  // print runstats to stdout
-  printf("  var csv = [                  \n");
-  //   printf("{ParameterM:\"rest\", Module:123, ParameterC:\"test\", Channel0:1, Channel1:1, Channel2:1, Channel3:1},  \n");
-  mapped[AOUTBLOCK] = OB_RSREG;
-  read_print_runstats(0, 1, mapped);
-  mapped[AOUTBLOCK] = OB_IOREG;
-  printf("  ];                 \n");
-
-
-  // finish printing the webpage
-  for( k = 61; k < 99; k ++ )
-  {
-      fgets(line, LINESZ, fil);        // read from template
-      printf("%s",line);               // "print" to webserver on stdout
-  }   
-   
- // clean up  
- munmap(map_addr, size);
- close(fd);
- fclose(fil);
- return 0;
+    
+    int fd;
+    void *map_addr;
+    int size = 4096;
+    volatile unsigned int *mapped;
+    int k;
+    FILE *fil;
+    char line[LINESZ];
+    
+    // *************** PS/PL IO initialization *********************
+    // open the device for PD register I/O
+    fd = open("/dev/uio0", O_RDWR);
+    if (fd < 0) {
+        perror("Failed to open devfile");
+        return 1;
+    }
+    
+    map_addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    
+    if (map_addr == MAP_FAILED) {
+        perror("Failed to mmap");
+        return 1;
+    }
+    
+    mapped = (unsigned int *) map_addr;
+    
+    // ************** XIA code begins **************************
+    
+    // read the webpage template and print
+    fil = fopen("../html/rspage.html", "r");
+    for (k = 0; k < 61; k++) {
+        fgets(line, LINESZ, fil);     // read from template, first part
+        if (k == 5)
+            printf("<title>Pixie-Net Run Statistics (current)</title>\n");
+        else if (k == 50)
+            printf("<p> <h1> Pixie-Net Run Statistics (current) </h1>\n");
+        else if (k == 51)
+            printf(" (Do not execute during data acquisition) </p>\n");
+        else
+            printf("%s", line);            // "print" to webserver on stdout
+    }
+    
+    // print runstats to stdout
+    printf("  var csv = [                  \n");
+    //   printf("{ParameterM:\"rest\", Module:123, ParameterC:\"test\", Channel0:1, Channel1:1, Channel2:1, Channel3:1},  \n");
+    mapped[AOUTBLOCK] = OB_RSREG;
+    read_print_runstats(0, 1, mapped);
+    mapped[AOUTBLOCK] = OB_IOREG;
+    printf("  ];                 \n");
+    
+    
+    // finish printing the webpage
+    for (k = 61; k < 99; k++) {
+        fgets(line, LINESZ, fil);        // read from template
+        printf("%s", line);               // "print" to webserver on stdout
+    }
+    
+    // clean up
+    munmap(map_addr, size);
+    close(fd);
+    fclose(fil);
+    return 0;
 }

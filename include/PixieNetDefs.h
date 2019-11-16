@@ -35,14 +35,14 @@
 
 // system constants
 #define PS_CODE_VERSION 0x0210
-#define PN_BOARD_VERSION_12_250_A 0xA990    
-#define PN_BOARD_VERSION_12_250_B 0xA991  
-#define PN_BOARD_VERSION_12_250_B_PTP 0xA981  
+#define PN_BOARD_VERSION_12_250_A 0xA990
+#define PN_BOARD_VERSION_12_250_B 0xA991
+#define PN_BOARD_VERSION_12_250_B_PTP 0xA981
 #define ADC_CLK_MHZ 250
 #define SYSTEM_CLOCK_MHZ 125
 #define FILTER_CLOCK_MHZ 125
 #define NCHANNELS 4
-#define V_OFFSET_MAX			1.25			// Pixie voltage offset maximum
+#define V_OFFSET_MAX            1.25            // Pixie voltage offset maximum
 #define MAX_MCA_BINS       32768
 #define WEB_MCA_BINS       4096
 #define MCA2D_BINS       100 // in each dimension
@@ -123,20 +123,20 @@
 // channel reg addr defines
 // block 1
 // channel independent lower bits of event registers
-#define CA_HIT			0x100
-#define CA_TSL			0x101
-#define CA_TSH		   0x102
-#define CA_PSAA		0x103
-#define CA_PSAB		0x104
-#define CA_CFDA		0x105
-#define CA_CFDB		0x106
-#define CA_LSUM		0x107
-#define CA_TSUM		0x108
-#define CA_GSUM		0x109
-#define CA_REJECT		0x10A
-#define CA_LSUMB		0x10B
-#define CA_TSUMB		0x10C
-#define CA_GSUMB		0x10D
+#define CA_HIT            0x100
+#define CA_TSL            0x101
+#define CA_TSH           0x102
+#define CA_PSAA        0x103
+#define CA_PSAB        0x104
+#define CA_CFDA        0x105
+#define CA_CFDB        0x106
+#define CA_LSUM        0x107
+#define CA_TSUM        0x108
+#define CA_GSUM        0x109
+#define CA_REJECT        0x10A
+#define CA_LSUMB        0x10B
+#define CA_TSUMB        0x10C
+#define CA_GSUMB        0x10D
 // ADC registers
 #define AADC0        0x11F
 #define AADC1        0x12F
@@ -159,10 +159,10 @@
 #define AWF3         0x303
 
 // outblocks
-#define OB_IOREG     0x0			// I/O
-#define OB_EVREG     0x1			// Event data
-#define OB_RSREG     0x2			// run statistics
-#define OB_WFREG     0x3			// channel waveforms
+#define OB_IOREG     0x0            // I/O
+#define OB_EVREG     0x1            // Event data
+#define OB_RSREG     0x2            // run statistics
+#define OB_WFREG     0x3            // channel waveforms
 
 
 

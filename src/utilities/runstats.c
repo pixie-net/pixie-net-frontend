@@ -49,39 +49,39 @@
 
 
 int main(void) {
-
-  int fd;
-  void *map_addr;
-  int size = 4096;
-  volatile unsigned int *mapped;
-
-
-  // *************** PS/PL IO initialization *********************
-  // open the device for PD register I/O
-  fd = open("/dev/uio0", O_RDWR);
-  if (fd < 0) {
-    perror("Failed to open devfile");
-    return 1;
-  }
-
-  map_addr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-
-  if (map_addr == MAP_FAILED) {
-    perror("Failed to mmap");
-    return 1;
-  }
-
-  mapped = (unsigned int *) map_addr;
-
-  // ************** XIA code begins **************************
-  
-  mapped[AOUTBLOCK] = OB_RSREG;
-  read_print_runstats(0, 0, mapped);
-  mapped[AOUTBLOCK] = OB_IOREG;
-
-   
- // clean up  
- munmap(map_addr, size);
- close(fd);
- return 0;
+    
+    int fd;
+    void *map_addr;
+    int size = 4096;
+    volatile unsigned int *mapped;
+    
+    
+    // *************** PS/PL IO initialization *********************
+    // open the device for PD register I/O
+    fd = open("/dev/uio0", O_RDWR);
+    if (fd < 0) {
+        perror("Failed to open devfile");
+        return 1;
+    }
+    
+    map_addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    
+    if (map_addr == MAP_FAILED) {
+        perror("Failed to mmap");
+        return 1;
+    }
+    
+    mapped = (unsigned int *) map_addr;
+    
+    // ************** XIA code begins **************************
+    
+    mapped[AOUTBLOCK] = OB_RSREG;
+    read_print_runstats(0, 0, mapped);
+    mapped[AOUTBLOCK] = OB_IOREG;
+    
+    
+    // clean up
+    munmap(map_addr, size);
+    close(fd);
+    return 0;
 }
