@@ -97,8 +97,8 @@ int main(void) {
     
     // read the webpage template and print
     fil = fopen("../html/adcpage.html", "r");
-    for (k = 0; k < 40; k++) {
-        char *result = fgets(line, LINESZ, fil);     // read from template, first part
+    for (k = 0; k < 86; k++) {
+        fgets(line, LINESZ, fil);     // read from template, first part
         printf("%s", line);            // "print" to webserver on stdout
     }
     
@@ -113,7 +113,7 @@ int main(void) {
     printf("      \"%d,%d,%d,%d,%d\\n \"  ,  \n", k, adc0[k - 1], adc1[k - 1], adc2[k - 1], adc3[k - 1]);
     
     // finish printing the webpage
-    for (k = 41; k < 80; k++) {
+    for (k = 87; k < 147; k++) {
         fgets(line, LINESZ, fil);        // read from template
         printf("%s", line);               // "print" to webserver on stdout
     }
