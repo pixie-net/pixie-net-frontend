@@ -6,7 +6,7 @@
     <title>Pixie-Net PSA Histogram</title>
 
     <!-- Plotly.js -->
-    <script src="../js/plotly-latest.min.js"></script>
+    <script src="../js/plugins/plotly.min.js"></script>
 
     <style type="text/css">
         body {
@@ -78,7 +78,6 @@
         var Nbins = 100;
 
         Plotly.d3.csv('../../psa2D.csv', function (err, rows) {
-
             function unpack(rows, key) {
                 return rows.map(function (row) {
                     return row[key];
