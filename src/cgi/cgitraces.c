@@ -48,86 +48,79 @@
 #include "PixieNetCommon.h"
 
 
-int main(void) {		 
-
-  int fd;
-  void *map_addr;
-  int size = 4096;
-  volatile unsigned int *mapped;
-  int k;
-  FILE * fil;
-  unsigned int adc0[NTRACE_SAMPLES], adc1[NTRACE_SAMPLES], adc2[NTRACE_SAMPLES], adc3[NTRACE_SAMPLES];
-  char line[LINESZ];
-
-
-  // *************** PS/PL IO initialization *********************
-  // open the device for PD register I/O
-  fd = open("/dev/uio0", O_RDWR);
-  if (fd < 0) {
-    perror("Failed to open devfile");
-    return 1;
-  }
-
-  map_addr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-
-  if (map_addr == MAP_FAILED) {
-    perror("Failed to mmap");
-    return 1;
-  }
-
-  mapped = (unsigned int *) map_addr;
-
-
-   // **************** XIA code begins **********************
-
-   // read 8K samples from ADC register 
-   // at this point, no guarantee that sampling is truly periodic
-   mapped[AOUTBLOCK] = OB_EVREG;		// switch reads to event data block of addresses
-   
-   // dummy reads for sampling update
-   k = mapped[AADC0] & 0xFFFF;
-   k = mapped[AADC1] & 0xFFFF;
-   k = mapped[AADC2] & 0xFFFF;
-   k = mapped[AADC3] & 0xFFFF;
-
-   for( k = 0; k < NTRACE_SAMPLES; k ++ )
-      adc0[k] = mapped[AADC0] & 0xFFFF;
-   for( k = 0; k < NTRACE_SAMPLES; k ++ )
-      adc1[k] = mapped[AADC1] & 0xFFFF;
-   for( k = 0; k < NTRACE_SAMPLES; k ++ )
-      adc2[k] = mapped[AADC2] & 0xFFFF;
-   for( k = 0; k < NTRACE_SAMPLES; k ++ )
-      adc3[k] = mapped[AADC3] & 0xFFFF;
-
-   // read the webpage template and print 
-   fil = fopen("../html/adcpage.html","r");
-   for( k = 0; k < 40; k ++ )
-   {
-      fgets(line, LINESZ, fil);     // read from template, first part
-      printf("%s",line);            // "print" to webserver on stdout  
-   }   
-   
-   fgets(line, LINESZ, fil);        // read from template, the line listing the ADC.csv file. This is not printed
-   printf("       \"sample,adc0,adc1,adc2,adc3\\n\"  +  \n");
-
-   // print the data
-   for( k = 0; k < NTRACE_SAMPLES; k ++ )
-   {
-        printf("      \"%d,%d,%d,%d,%d\\n \"  + \n",k,adc0[k],adc1[k],adc2[k],adc3[k]);
-   }
-   // comma, not + requred in last line
-   printf("      \"%d,%d,%d,%d,%d\\n \"  ,  \n",k,adc0[k-1],adc1[k-1],adc2[k-1],adc3[k-1]);
- 
-   // finish printing the webpage
-   for( k = 41; k < 80; k ++ )
-   {
-      fgets(line, LINESZ, fil);        // read from template
-      printf("%s",line);               // "print" to webserver on stdout
-   }   
-
-// clean up  
-munmap(map_addr, size);
-close(fd);
-fclose(fil);
-return 0;
+int main(void) {
+    int fd;
+    void *map_addr;
+    int size = 4096;
+    volatile unsigned int *mapped;
+    int k;
+    FILE *fil;
+    unsigned int adc0[NTRACE_SAMPLES], adc1[NTRACE_SAMPLES], adc2[NTRACE_SAMPLES], adc3[NTRACE_SAMPLES];
+    char line[LINESZ];
+    
+    // *************** PS/PL IO initialization *********************
+    // open the device for PD register I/O
+    fd = open("/dev/uio0", O_RDWR);
+    if (fd < 0) {
+        perror("Failed to open devfile");
+        return 1;
+    }
+    
+    map_addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    
+    if (map_addr == MAP_FAILED) {
+        perror("Failed to mmap");
+        return 1;
+    }
+    
+    mapped = (unsigned int *) map_addr;
+    
+    // **************** XIA code begins **********************
+    // read 8K samples from ADC register
+    // at this point, no guarantee that sampling is truly periodic
+    mapped[AOUTBLOCK] = OB_EVREG;        // switch reads to event data block of addresses
+    
+    // dummy reads for sampling update
+    k = mapped[AADC0] & 0xFFFF;
+    k = mapped[AADC1] & 0xFFFF;
+    k = mapped[AADC2] & 0xFFFF;
+    k = mapped[AADC3] & 0xFFFF;
+    
+    for (k = 0; k < NTRACE_SAMPLES; k++)
+        adc0[k] = mapped[AADC0] & 0xFFFF;
+    for (k = 0; k < NTRACE_SAMPLES; k++)
+        adc1[k] = mapped[AADC1] & 0xFFFF;
+    for (k = 0; k < NTRACE_SAMPLES; k++)
+        adc2[k] = mapped[AADC2] & 0xFFFF;
+    for (k = 0; k < NTRACE_SAMPLES; k++)
+        adc3[k] = mapped[AADC3] & 0xFFFF;
+    
+    // read the webpage template and print
+    fil = fopen("../html/adcpage.html", "r");
+    for (k = 0; k < 86; k++) {
+        fgets(line, LINESZ, fil);     // read from template, first part
+        printf("%s", line);            // "print" to webserver on stdout
+    }
+    
+    fgets(line, LINESZ, fil);        // read from template, the line listing the ADC.csv file. This is not printed
+    printf("       \"sample,adc0,adc1,adc2,adc3\\n\"  +  \n");
+    
+    // print the data
+    for (k = 0; k < NTRACE_SAMPLES; k++) {
+        printf("      \"%d,%d,%d,%d,%d\\n \"  + \n", k, adc0[k], adc1[k], adc2[k], adc3[k]);
+    }
+    // comma, not + requred in last line
+    printf("      \"%d,%d,%d,%d,%d\\n \"  ,  \n", k, adc0[k - 1], adc1[k - 1], adc2[k - 1], adc3[k - 1]);
+    
+    // finish printing the webpage
+    for (k = 87; k < 143; k++) {
+        fgets(line, LINESZ, fil);        // read from template
+        printf("%s", line);               // "print" to webserver on stdout
+    }
+    
+    // clean up
+    munmap(map_addr, size);
+    close(fd);
+    fclose(fil);
+    return 0;
 }
