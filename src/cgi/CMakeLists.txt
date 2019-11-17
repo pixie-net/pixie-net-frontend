@@ -1,8 +1,5 @@
 set(INSTALL_PATH assets/cgi)
 
-add_executable(cgitraces.cgi cgitraces.c)
-install(TARGETS cgitraces.cgi DESTINATION ${INSTALL_PATH})
-
 FOREACH (prog cgistats cgiwaveforms)
     add_executable(${prog}.cgi ${prog}.c)
     target_link_libraries(${prog}.cgi PixieNetCommon_STATIC)
