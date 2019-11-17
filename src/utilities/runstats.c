@@ -32,16 +32,12 @@
  * THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE.
  *----------------------------------------------------------------------*/
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include <time.h>
-#include <signal.h>
-#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
 #include <sys/mman.h>
 
 #include "PixieNetDefs.h"
@@ -49,36 +45,51 @@
 
 
 int main(void) {
-    
-    int fd;
-    void *map_addr;
     int size = 4096;
-    volatile unsigned int *mapped;
-    
     
     // *************** PS/PL IO initialization *********************
     // open the device for PD register I/O
-    fd = open("/dev/uio0", O_RDWR);
+    int fd = open("/dev/uio0", O_RDWR);
     if (fd < 0) {
         perror("Failed to open devfile");
         return 1;
     }
     
-    map_addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    void *map_addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     
     if (map_addr == MAP_FAILED) {
         perror("Failed to mmap");
         return 1;
     }
-    
-    mapped = (unsigned int *) map_addr;
+    volatile unsigned int *mapped = (unsigned int *) map_addr;
     
     // ************** XIA code begins **************************
-    
+    char *data = getenv("QUERY_STRING");
     mapped[AOUTBLOCK] = OB_RSREG;
-    read_print_runstats(0, 0, mapped);
+    if (data && strstr(data, "for_web")) {
+        unsigned int k;
+        char line[LINESZ];
+        FILE *fil;
+        
+        fil = fopen("../html/rspage.html", "r");
+        
+        while(fgets(line, LINESZ, fil)) {
+            printf("%s", line);
+            if (strstr(line, "d3.csv("))
+                break;
+        }
+
+        printf("  var csv = [                  \n");
+        read_print_runstats(0, 1, mapped);
+        printf("  ];                 \n");
+
+        while(fgets(line, LINESZ, fil))
+            printf("%s", line);
+        fclose(fil);
+    } else {
+        read_print_runstats(0, 0, mapped);
+    }
     mapped[AOUTBLOCK] = OB_IOREG;
-    
     
     // clean up
     munmap(map_addr, size);

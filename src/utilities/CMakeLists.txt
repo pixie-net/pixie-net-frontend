@@ -4,7 +4,11 @@ install(TARGETS gettraces.cgi DESTINATION assets/cgi)
 add_executable(pollcsr pollcsr.c)
 install(TARGETS pollcsr DESTINATION bin)
 
-FOREACH (prog runstats findsettings clockprog)
+add_executable(runstats.cgi runstats.c)
+target_link_libraries(runstats.cgi PixieNetCommon_STATIC m)
+install(TARGETS runstats.cgi DESTINATION assets/cgi)
+
+FOREACH (prog findsettings clockprog)
     add_executable(${prog} ${prog}.c)
     target_link_libraries(${prog} PixieNetCommon_STATIC m)
     install(TARGETS ${prog} DESTINATION bin)
