@@ -1,7 +1,8 @@
-FOREACH (prog gettraces pollcsr)
-    add_executable(${prog} ${prog}.c)
-    install(TARGETS ${prog} DESTINATION bin)
-ENDFOREACH (prog)
+add_executable(gettraces.cgi gettraces.c)
+install(TARGETS gettraces.cgi DESTINATION assets/cgi)
+
+add_executable(pollcsr pollcsr.c)
+install(TARGETS pollcsr DESTINATION bin)
 
 FOREACH (prog runstats findsettings clockprog)
     add_executable(${prog} ${prog}.c)
