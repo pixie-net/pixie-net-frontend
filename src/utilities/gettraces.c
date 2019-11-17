@@ -93,11 +93,13 @@ int main(void) {
         char line[LINESZ];
         // read the webpage template and print
         fil = fopen("../html/gettraces.html", "r");
-        for (k = 0; k < 83; k++) {
-            fgets(line, LINESZ, fil);     // read from template, first part
-            printf("%s", line);            // "print" to webserver on stdout
+    
+        while(fgets(line, LINESZ, fil)) {
+            printf("%s", line);
+            if (strstr(line, "document.getElementById"))
+                break;
         }
-
+        
         fgets(line, LINESZ, fil);        // read from template, the line listing the ADC.csv file. This is not printed
         printf("       \"sample,adc0,adc1,adc2,adc3\\n\"  +  \n");
 
@@ -107,12 +109,10 @@ int main(void) {
         }
         // comma, not + requred in last line
         printf("      \"%d,%d,%d,%d,%d\\n \"  ,  \n", k, adc0[k - 1], adc1[k - 1], adc2[k - 1], adc3[k - 1]);
-
+    
         // finish printing the webpage
-        for (k = 84; k < 143; k++) {
-            fgets(line, LINESZ, fil);        // read from template
-            printf("%s", line);               // "print" to webserver on stdout
-        }
+        while(fgets(line, LINESZ, fil))
+            printf("%s", line);
     } else {
         // open the output file
         fil = fopen("ADC.csv", "w");
