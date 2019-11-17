@@ -33,23 +33,13 @@
  * SUCH DAMAGE.
  *----------------------------------------------------------------------*/
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <time.h>
-#include <signal.h>
-#include <errno.h>
 #include <string.h>
-#include <sys/mman.h>
 
 #include "PixieNetDefs.h"
 #include "PixieNetCommon.h"
 
-
 int main(void) {
-    
     int k, m;
     FILE *fil1;
     FILE *fil2;
@@ -67,16 +57,12 @@ int main(void) {
     unsigned int evno = 0; // = 3;
     int ferr;
     
-    
-    
     // **************** code begins **********************
-    
     // get form data
     data = getenv("QUERY_STRING");
     if ((data != NULL) && (sscanf(data, "evno=%d", &mval) == 1)) {
         evno = mval;
     }
-    
     
     // -------- runtype 0x500, LMdata.txt ---------
     // read info from LM file

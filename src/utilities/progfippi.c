@@ -56,7 +56,6 @@
 
 
 int main(void) {
-    
     int fd;
     void *map_addr;
     int size = 4096;
@@ -65,9 +64,6 @@ int main(void) {
     
     
     // ******************* read ini file and fill struct with values ********************
-    
-    
-    
     PixieNetFippiConfig fippiconfig;        // struct holding the input parameters
     const char *defaults_file = "defaults.ini";
     int rval = init_PixieNetFippiConfig_from_file(defaults_file, 0,
@@ -113,9 +109,6 @@ int main(void) {
     }
     
     mapped = (unsigned int *) map_addr;
-    
-    
-    
     
     // ******************* XIA code begins ********************
     // first, set CSR run control options
