@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pixie-Net - ADC</title>
+    <title>Pixie-Net - MCA</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
@@ -32,19 +32,19 @@
         <div class="sidebar-wrapper" id="sidebar-wrapper">
             <ul class="nav">
                 <li>
-                    <a href="gettraces.html">
+                    <a href="get_traces.html">
                         <i class="now-ui-icons education_atom"></i>
                         <p>ADC traces (File)</p>
                     </a>
                 </li>
                 <li>
-                    <a href="mcapage.html">
+                    <a href="mca.html">
                         <i class="now-ui-icons design_app"></i>
                         <p>MCA spectra</p>
                     </a>
                 </li>
                 <li>
-                    <a href="rspage.html">
+                    <a href="run_stats.html">
                         <i class="now-ui-icons ui-1_bell-53"></i>
                         <p>Run Statistics</p>
                     </a>
@@ -67,7 +67,7 @@
     <div class="main-panel">
         <div class="panel-header">
             <div class="header text-center">
-                <h2 class="title">ADC Traces</h2>
+                <h2 class="title">MCA Spectrum</h2>
             </div>
         </div>
         <div class="content">
@@ -78,39 +78,47 @@
                             <div class="chart-area" id="graphdiv">
                                 <canvas></canvas>
                                 <script type="text/javascript">
+
                                     Dygraph.Interaction.DEBUG = true;
-                                    let g2 = new Dygraph(
+
+                                    var g2 = new Dygraph(
                                         document.getElementById("graphdiv"),
-                                        "../ADC.csv",
+                                        "../MCA.csv", // path to CSV file
                                         {
                                             legend: 'always',
                                             title: ' ',
-                                            ylabel: 'ADC value',
-                                            xlabel: 'Sample number'
+                                            ylabel: 'N Counts',
+                                            xlabel: 'Bin Number'
                                         }          // options
                                     );
-                                    let graphs = [g2];
-                                    let scales = {x: false, y: false};
+                                    var graphs = [g2];
+                                    var scales = {x: false, y: false};
 
                                     function setLogScale(axis, val) {
                                         if (axis === 'y') {
-                                            for (let idx1 = 0; idx1 < graphs.length; idx1++) {
-                                                graphs[idx1].updateOptions({logscale: val});
+                                            for (var idx = 0; idx < graphs.length; idx++) {
+                                                graphs[idx].updateOptions({logscale: val});
                                             }
                                         } else {
-                                            for (let idx = 0; idx < graphs.length; idx++) {
+                                            for (var idx = 0; idx < graphs.length; idx++) {
                                                 graphs[idx].updateOptions({axes: {x: {logscale: val}}});
                                             }
                                         }
                                         scales[axis] = val;
+                                        var text = "y: " + (scales.y ? "log" : "linear") + ", x: " + (scales.x ? "log" : "linear");
+                                        document.getElementById("description").innerText = text;
                                     }
 
                                     setLogScale('y', false);
                                 </script>
                             </div>
                         </div>
-                        <p>Double click to auto zoom. Click and drag to zoom. Alt click and drag to pan. </p>
-                        <p>Roughly 200 nanoseconds between samples </p>
+                        <input id='ylog' type="button" value="Log Y" onclick="setLogScale('y', true)">
+                        <input id='ylinear' type="button" value="Linear Y"
+                               onclick="setLogScale('y', false)">
+                        <p>Double click to auto zoom.<br>
+                            Click and drag to zoom<br>
+                            Alt click and drag to pan </p>
                         <div class="card-footer">
                             <div class="stats">
                                 <i class="now-ui-icons arrows-1_refresh-69"></i> Refresh with F5.

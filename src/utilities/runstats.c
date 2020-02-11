@@ -71,7 +71,7 @@ int main(void) {
         char line[LINESZ];
         FILE *fil;
         
-        fil = fopen("../html/rspage.html", "r");
+        fil = fopen("../html/run_stats.html", "r");
         
         while(fgets(line, LINESZ, fil)) {
             printf("%s", line);
