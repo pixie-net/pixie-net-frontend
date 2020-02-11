@@ -26,7 +26,7 @@
         -->
         <div class="logo">
             <a href="https://xia.com" class="simple-text logo-mini">
-                <img class="image" src="../images/cropped-xia-xray-gamma-ray-products-logo.jpg">
+                <img class="image" src="../images/xialogo.jpg">
             </a>
             <a href="../index.html" class="simple-text logo-normal">
                 Pixie-Net
@@ -40,7 +40,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href=".html">
+                    <a href="mcapage.html">
                         <i class="now-ui-icons design_app"></i>
                         <p>MCA spectra</p>
                     </a>
@@ -52,13 +52,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="page.html">
+                    <a href="../html/psahistpage.html">
                         <i class="now-ui-icons users_single-02"></i>
                         <p>Pulse-Shape Analysis</p>
                     </a>
                 </li>
                 <li>
-                    <a href="l">
+                    <a href="daq.html">
                         <i class="now-ui-icons location_map-big"></i>
                         <p>DAQ</p>
                     </a>
@@ -83,7 +83,7 @@
                                 <script>
                                     let rows = [];
                                     let formatdate = d3.time.format("%b %d %Y");
-                                    d3.csv("../../RS.csv", function (error, csv) {
+                                    d3.csv("../RS.csv", function (error, csv) {
                                         csv.forEach(function (row) {
                                             rows.push(row);
                                         });
@@ -120,11 +120,6 @@
                 </div>
             </div>
         </div>
-        <footer class="footer">
-            <div class="img-fluid">
-                <img src="../images/Xia_LLC_web_header.jpg">
-            </div>
-        </footer>
     </div>
 </div>
 <!--   Core JS Files   -->
