@@ -1,12 +1,12 @@
 add_executable(gettraces.cgi gettraces.c)
-install(TARGETS gettraces.cgi DESTINATION assets/cgi)
+install(TARGETS gettraces.cgi DESTINATION cgi)
 
 add_executable(pollcsr pollcsr.c)
 install(TARGETS pollcsr DESTINATION bin)
 
 add_executable(runstats.cgi runstats.c)
 target_link_libraries(runstats.cgi PixieNetCommon_STATIC m)
-install(TARGETS runstats.cgi DESTINATION assets/cgi)
+install(TARGETS runstats.cgi DESTINATION cgi)
 
 FOREACH (prog findsettings clockprog)
     add_executable(${prog} ${prog}.c)
@@ -22,6 +22,10 @@ FOREACH (prog progfippi startdaq coincdaq)
     add_executable(${prog} ${prog}.c)
     target_link_libraries(${prog} PixieNetCommon_STATIC PixieNetConfig_STATIC)
     install(TARGETS ${prog} DESTINATION bin)
+
+    add_executable(${prog}.cgi ${prog}.c)
+    target_link_libraries(${prog}.cgi PixieNetCommon_STATIC PixieNetConfig_STATIC)
+    install(TARGETS ${prog}.cgi DESTINATION cgi)
 ENDFOREACH (prog)
 
 add_executable(acquire acquire.cpp)
