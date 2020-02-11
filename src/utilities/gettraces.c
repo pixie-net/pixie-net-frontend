@@ -92,7 +92,7 @@ int main(void) {
     if (data && strstr(data, "for_web")) {
         char line[LINESZ];
         // read the webpage template and print
-        fil = fopen("../html/gettraces.html", "r");
+        fil = fopen("../assets/html/gettraces.html", "r");
     
         while(fgets(line, LINESZ, fil)) {
             printf("%s", line);
