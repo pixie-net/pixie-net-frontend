@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pixie-Net - MCA</title>
+    <title>Pixie-Net - ADC</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
 
     <!-- Material Kit CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../css/now-ui-dashboard.css" rel="stylesheet"/>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../static/css/now-ui-dashboard.css" rel="stylesheet"/>
     <link rel="shortcut icon" type="image/png" href="../images/favicon.ico"/>
     <script type="text/javascript" src="../js/plugins/dygraph-combined.js"></script>
 </head>
@@ -67,7 +67,7 @@
     <div class="main-panel">
         <div class="panel-header">
             <div class="header text-center">
-                <h2 class="title">MCA Spectrum</h2>
+                <h2 class="title">ADC Traces</h2>
             </div>
         </div>
         <div class="content">
@@ -78,47 +78,39 @@
                             <div class="chart-area" id="graphdiv">
                                 <canvas></canvas>
                                 <script type="text/javascript">
-
                                     Dygraph.Interaction.DEBUG = true;
-
-                                    var g2 = new Dygraph(
+                                    let g2 = new Dygraph(
                                         document.getElementById("graphdiv"),
-                                        "../MCA.csv", // path to CSV file
+                                        "../ADC.csv",
                                         {
                                             legend: 'always',
                                             title: ' ',
-                                            ylabel: 'N Counts',
-                                            xlabel: 'Bin Number'
+                                            ylabel: 'ADC value',
+                                            xlabel: 'Sample number'
                                         }          // options
                                     );
-                                    var graphs = [g2];
-                                    var scales = {x: false, y: false};
+                                    let graphs = [g2];
+                                    let scales = {x: false, y: false};
 
                                     function setLogScale(axis, val) {
                                         if (axis === 'y') {
-                                            for (var idx = 0; idx < graphs.length; idx++) {
-                                                graphs[idx].updateOptions({logscale: val});
+                                            for (let idx1 = 0; idx1 < graphs.length; idx1++) {
+                                                graphs[idx1].updateOptions({logscale: val});
                                             }
                                         } else {
-                                            for (var idx = 0; idx < graphs.length; idx++) {
+                                            for (let idx = 0; idx < graphs.length; idx++) {
                                                 graphs[idx].updateOptions({axes: {x: {logscale: val}}});
                                             }
                                         }
                                         scales[axis] = val;
-                                        var text = "y: " + (scales.y ? "log" : "linear") + ", x: " + (scales.x ? "log" : "linear");
-                                        document.getElementById("description").innerText = text;
                                     }
 
                                     setLogScale('y', false);
                                 </script>
                             </div>
                         </div>
-                        <input id='ylog' type="button" value="Log Y" onclick="setLogScale('y', true)">
-                        <input id='ylinear' type="button" value="Linear Y"
-                               onclick="setLogScale('y', false)">
-                        <p>Double click to auto zoom.<br>
-                            Click and drag to zoom<br>
-                            Alt click and drag to pan </p>
+                        <p>Double click to auto zoom. Click and drag to zoom. Alt click and drag to pan. </p>
+                        <p>Roughly 200 nanoseconds between samples </p>
                         <div class="card-footer">
                             <div class="stats">
                                 <i class="now-ui-icons arrows-1_refresh-69"></i> Refresh with F5.
