@@ -1,2 +1,0 @@
-# give everybody access to /dev/uio0, the PL I/O space
-KERNEL=="uio0",MODE="666"

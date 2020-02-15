@@ -1,11 +1,16 @@
-# Pixie-Net Software
-We forked this software from XIA LLC., and is available [here](http://support.xia.com/default.asp?W772). 
+# Pixie-Net Frontend
+This project focuses on the web application for use with the Pixie-Net system. We forked this software from XIA LLC. 
+The original code is available from XIA LLC. [here](http://support.xia.com/default.asp?W772). We have broken their code 
+into three components: 
+* [Pixie-Net API](https://github.com/pixie-net/pixie-net-api)
+* [Pixie-Net Backend](https://github.com/pixie-net/pixie-net-backend)
+* [Pixie-Net Frontend](https://github.com/pixie-net/pixie-net-frontend) 
 
 # Notice
 XIA LLC neither endorses nor supports the development of this project.  
 
 # Original Disclaimer
-Copyright (c) 2017 XIA LLC
+Copyright (c) 2019 XIA LLC
 All rights reserved.
 
 Redistribution and use in source and binary forms, 
