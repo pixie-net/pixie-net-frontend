@@ -1,58 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Setup</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+{% extends 'base.html' %}
+{% block page_title %} Setup {% endblock %}
 
-    <!--     Fonts and icons     -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+{% block additional_scripts %}
+    <script src="{{ url_for('static', filename='js/plugins/dygraph-combined.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom/setup.js') }}"></script>
+{% endblock %}
 
-    <!-- Material Kit CSS -->
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../static/css/now-ui-dashboard.css" rel="stylesheet"/>
-    <link rel="shortcut icon" type="image/png" href="../images/favicon.ico"/>
-    <script type="text/javascript" src="../js/plugins/dygraph-combined.js"></script>
-    <script src="../js/core/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="../js/custom/setup.js"></script>
-</head>
-<body>
-<div class="wrapper">
-    <div class="sidebar" data-color="blue">
-        <div class="logo">
-            <a href="https://xia.com" class="simple-text logo-mini">
-                <img class="image" src="../images/xialogo.jpg">
-            </a>
-            <a href="../index.html" class="simple-text logo-normal">
-                Pixie-Net
-            </a>
-        </div>
-        <div class="sidebar-wrapper" id="sidebar-wrapper">
-            <ul class="nav">
-                <li>
-                    <a href="setup.html">
-                        <i class="now-ui-icons education_atom"></i>
-                        <p>Setup</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="daq.html">
-                        <i class="now-ui-icons design_app"></i>
-                        <p>Run Control</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="analysis.html">
-                        <i class="now-ui-icons ui-1_bell-53"></i>
-                        <p>Analysis</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+{% block main_panel %}
     <div class="main-panel">
         <div class="panel-header">
             <div class="header text-center">
@@ -70,7 +24,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <input id='apply1' type="button" value="Program FPGA">
+                            <input id='apply1' type="button" class="btn btn-outline-primary" value="Program FPGA">
                         </div>
                     </div>
                     <div class="card" id="config_daq">
@@ -80,8 +34,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <input id='read' class='readbutton' type="button" value="Read Settings">
-                            <input id='apply' type="button" value="Update Settings">
+                            <input id='read' class='readbutton btn btn-outline-primary' type="button" value="Read Settings">
+                            <input id='apply' type="button" class="btn btn-outline-primary" value="Update Settings">
                             <p></p>
                             <div class="table-responsive" id="datatable">
                                 <table>
@@ -95,151 +49,116 @@
                                     </tr>
                                     <tr id=row00>
                                         <td>00</td>
-                                        <td><label for="polarity00"></label><input class="fieldp" type="text" size="8"
-                                                                                   id="polarity00" value="0"></td>
-                                        <td><label for="offset00"></label><input class="fieldo" type="text" size="8"
+                                        <td><label for="polarity00"></label><input class="fieldp"
+                                                                                   type="text"
+                                                                                   size="8"
+                                                                                   id="polarity00"
+                                                                                   value="0"></td>
+                                        <td><label for="offset00"></label><input class="fieldo"
+                                                                                 type="text"
+                                                                                 size="8"
                                                                                  id="offset00"
                                                                                  value="0.000"></td>
-                                        <td><label for="again00"></label><input class="fielda" type="text" size="8"
+                                        <td><label for="again00"></label><input class="fielda"
+                                                                                type="text" size="8"
                                                                                 id="again00"
                                                                                 value="0.000"></td>
-                                        <td><label for="dgain00"></label><input class="fieldd" type="text" size="8"
+                                        <td><label for="dgain00"></label><input class="fieldd"
+                                                                                type="text" size="8"
                                                                                 id="dgain00"
                                                                                 value="0.000"></td>
-                                        <td><label for="tau00"></label><input class="fieldt" type="text" size="8"
-                                                                              id="tau00" value="0.000">
+                                        <td><label for="tau00"></label><input class="fieldt"
+                                                                              type="text" size="8"
+                                                                              id="tau00"
+                                                                              value="0.000">
                                         </td>
                                     </tr>
                                     <tr id=row01>
                                         <td>01</td>
-                                        <td><label for="polarity01"></label><input class="fieldp" type="text" size="8"
+                                        <td><label for="polarity01"></label><input class="fieldp"
+                                                                                   type="text"
+                                                                                   size="8"
                                                                                    id="polarity01"
                                                                                    value="0"></td>
-                                        <td><label for="offset01"></label><input class="fieldo" type="text" size="8"
+                                        <td><label for="offset01"></label><input class="fieldo"
+                                                                                 type="text"
+                                                                                 size="8"
                                                                                  id="offset01"
                                                                                  value="0.000"></td>
-                                        <td><label for="again01"></label><input class="fielda" type="text" size="8"
+                                        <td><label for="again01"></label><input class="fielda"
+                                                                                type="text" size="8"
                                                                                 id="again01"
                                                                                 value="0.000"></td>
-                                        <td><label for="dgain01"></label><input class="fieldd" type="text" size="8"
+                                        <td><label for="dgain01"></label><input class="fieldd"
+                                                                                type="text" size="8"
                                                                                 id="dgain01"
                                                                                 value="0.000"></td>
-                                        <td><label for="tau01"></label><input class="fieldt" type="text" size="8"
-                                                                              id="tau01" value="0.000">
+                                        <td><label for="tau01"></label><input class="fieldt"
+                                                                              type="text" size="8"
+                                                                              id="tau01"
+                                                                              value="0.000">
                                         </td>
                                     </tr>
                                     <tr id=row02>
                                         <td>02</td>
-                                        <td><label for="polarity02"></label><input class="fieldp" type="text" size="8"
+                                        <td><label for="polarity02"></label><input class="fieldp"
+                                                                                   type="text"
+                                                                                   size="8"
                                                                                    id="polarity02"
                                                                                    value="0"></td>
-                                        <td><label for="offset02"></label><input class="fieldo" type="text" size="8"
+                                        <td><label for="offset02"></label><input class="fieldo"
+                                                                                 type="text"
+                                                                                 size="8"
                                                                                  id="offset02"
                                                                                  value="0.000"></td>
-                                        <td><label for="again02"></label><input class="fielda" type="text" size="8"
+                                        <td><label for="again02"></label><input class="fielda"
+                                                                                type="text" size="8"
                                                                                 id="again02"
                                                                                 value="0.000"></td>
-                                        <td><label for="dgain02"></label><input class="fieldd" type="text" size="8"
+                                        <td><label for="dgain02"></label><input class="fieldd"
+                                                                                type="text" size="8"
                                                                                 id="dgain02"
                                                                                 value="0.000"></td>
-                                        <td><label for="tau02"></label><input class="fieldt" type="text" size="8"
-                                                                              id="tau02" value="0.000">
+                                        <td><label for="tau02"></label><input class="fieldt"
+                                                                              type="text" size="8"
+                                                                              id="tau02"
+                                                                              value="0.000">
                                         </td>
                                     </tr>
                                     <tr id=row03>
                                         <td>03</td>
-                                        <td><label for="polarity03"></label><input class="fieldp" type="text" size="8"
+                                        <td><label for="polarity03"></label><input class="fieldp"
+                                                                                   type="text"
+                                                                                   size="8"
                                                                                    id="polarity03"
                                                                                    value="0"></td>
-                                        <td><label for="offset03"></label><input class="fieldo" type="text" size="8"
+                                        <td><label for="offset03"></label><input class="fieldo"
+                                                                                 type="text"
+                                                                                 size="8"
                                                                                  id="offset03"
                                                                                  value="0.000"></td>
-                                        <td><label for="again03"></label><input class="fielda" type="text" size="8"
+                                        <td><label for="again03"></label><input class="fielda"
+                                                                                type="text" size="8"
                                                                                 id="again03"
                                                                                 value="0.000"></td>
-                                        <td><label for="dgain03"></label><input class="fieldd" type="text" size="8"
+                                        <td><label for="dgain03"></label><input class="fieldd"
+                                                                                type="text" size="8"
                                                                                 id="dgain03"
                                                                                 value="0.000"></td>
-                                        <td><label for="tau03"></label><input class="fieldt" type="text" size="8"
-                                                                              id="tau03" value="0.000">
+                                        <td><label for="tau03"></label><input class="fieldt"
+                                                                              type="text" size="8"
+                                                                              id="tau03"
+                                                                              value="0.000">
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="card" id="get_traces">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <h2>Traces</h2>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <input id='refresh' type="button" value="Refresh Traces">
-                            <div id="graphdiv2"></div>
-                            <div id="legend"></div>
-                        </div>
-                    </div>
-                    <div class="card card-chart" id="get_mca">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <h2>MCA</h2>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-area" id="graphdiv">
-                                <canvas></canvas>
-                                <script type="text/javascript">
-
-                                    Dygraph.Interaction.DEBUG = true;
-
-                                    var g2 = new Dygraph(
-                                        document.getElementById("graphdiv"),
-                                        "../MCA.csv", // path to CSV file
-                                        {
-                                            legend: 'always',
-                                            title: ' ',
-                                            ylabel: 'N Counts',
-                                            xlabel: 'Bin Number'
-                                        }          // options
-                                    );
-                                    var graphs = [g2];
-                                    var scales = {x: false, y: false};
-
-                                    function setLogScale(axis, val) {
-                                        if (axis === 'y') {
-                                            for (var idx = 0; idx < graphs.length; idx++) {
-                                                graphs[idx].updateOptions({logscale: val});
-                                            }
-                                        } else {
-                                            for (var idx = 0; idx < graphs.length; idx++) {
-                                                graphs[idx].updateOptions({axes: {x: {logscale: val}}});
-                                            }
-                                        }
-                                        scales[axis] = val;
-                                        var text = "y: " + (scales.y ? "log" : "linear") + ", x: " + (scales.x ? "log" : "linear");
-                                        document.getElementById("description").innerText = text;
-                                    }
-
-                                    setLogScale('y', false);
-                                </script>
-                            </div>
-                        </div>
-                        <input id='ylog' type="button" value="Log Y" onclick="setLogScale('y', true)">
-                        <input id='ylinear' type="button" value="Linear Y"
-                               onclick="setLogScale('y', false)">
-                        <p>Double click to auto zoom.<br>
-                            Click and drag to zoom<br>
-                            Alt click and drag to pan </p>
-                        <div class="card-footer">
-                            <div class="stats">
-                                <i class="now-ui-icons arrows-1_refresh-69"></i> Refresh with F5.
-                            </div>
-                        </div>
-                    </div>
+                    {% include 'hist_trace.html' %}
+                    {% include 'hist_mca.html' %}
                 </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
