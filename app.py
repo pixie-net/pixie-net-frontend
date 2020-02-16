@@ -1,5 +1,5 @@
 """
-file: run.py
+file: app.py
 brief: Main entry for the Pixie-Net front end
 author: S. V. Paulauskas
 date: February 16, 2020
